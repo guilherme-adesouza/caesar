@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const DBMigrate = require('db-migrate');
 
-var dbConfig = {
+let dbConfig = {
   dev: {
     user: Config.DB_USER,
     host: Config.HOST,
@@ -16,10 +16,10 @@ var dbConfig = {
   }
 };
 
-var dbmCesar = DBMigrate.getInstance(true, { env: 'dev', config: dbConfig });
-var dbStartConfig = dbConfig;
+const dbmCesar = DBMigrate.getInstance(true, { env: 'dev', config: dbConfig });
+let dbStartConfig = dbConfig;
 dbStartConfig.dev.database = Config.DB_START_NAME;
-var dbmStart = DBMigrate.getInstance(true, { env: 'dev', config: dbStartConfig });
+const dbmStart = DBMigrate.getInstance(true, { env: 'dev', config: dbStartConfig });
 
 const port = Config.PORT;
 
@@ -57,9 +57,12 @@ dbmStart.createDatabase("cesar")
       console.info(`Listening on port ${port}...`);
       console.info(`Cesar Server started!`)
     })
+  }).catch(function (e) {
+    console.error(e);
   });
 })
 .catch(function(e) {
+  console.error(e);
   dbmCesar.up().then(function() {
     app.listen(port, () => {
       console.info(`Listening on port ${port}...`);
