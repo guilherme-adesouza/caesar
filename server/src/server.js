@@ -57,12 +57,11 @@ dbmStart.createDatabase("cesar")
       console.info(`Listening on port ${port}...`);
       console.info(`Cesar Server started!`)
     })
-  }).catch(function (e) {
-    console.error(e);
+  }).catch(function (errorIgnored) {
+    console.error(errorIgnored);
   });
 })
-.catch(function(e) {
-  console.error(e);
+.catch(function(errorIgnored) {
   dbmCesar.up().then(function() {
     app.listen(port, () => {
       console.info(`Listening on port ${port}...`);

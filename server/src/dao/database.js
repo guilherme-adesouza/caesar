@@ -11,12 +11,12 @@ const pool = new Pool({
 
 const executeQuery = (query, cb) => {
   console.info('[QUERY]: ', JSON.stringify(query));
-  pool.query(query, (error, results) => {
-    if (error) {
-      throw error
-    }
-    cb(results.rows);
-  })
+  pool.query(query)
+      .then(results => cb(results.rows))
+      .catch(error => {
+        console.error(error);
+        throw error
+      })
 };
 
 module.exports = {
